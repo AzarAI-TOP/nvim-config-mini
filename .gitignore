@@ -1,0 +1,9 @@
+# Local tool-generated state (not part of the config)
+.codegraph/
+.reasonix/
+
+# Neovim runtime artifacts
+plugin/
+shada/
+*.shada
+undo/
