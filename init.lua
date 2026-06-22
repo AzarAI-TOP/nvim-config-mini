@@ -3,5 +3,6 @@
 
 require("option")
 require("colorscheme")
+require("treesitter")
 require("keymap")
 require("autocmd")
