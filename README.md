@@ -1,8 +1,9 @@
 # nvim-config-mini
 
-A minimal, plugin-free Neovim configuration — pure Lua, no package manager, no
+A minimal, pure-Lua Neovim configuration — no third-party package manager, no
 external dependencies. Just sane defaults, keymaps, autocommands, and a couple of
-small utilities.
+small utilities. The only plugin is the **tokyonight** colorscheme, managed by
+Neovim's built-in `vim.pack` (requires Neovim 0.12+).
 
 ## Layout
 
@@ -11,6 +12,7 @@ small utilities.
 ├── init.lua            # entry point — loads the modules below
 ├── lua/
 │   ├── option.lua      # editor options (number, indent, search, undo, ...)
+│   ├── colorscheme.lua # tokyonight (moon) via built-in vim.pack
 │   ├── keymap.lua      # key mappings (leader = <Space>)
 │   ├── autocmd.lua     # autocommands + per-filetype indent rules
 │   └── utils.lua       # helpers (e.g. toggle_comment)
@@ -19,7 +21,8 @@ small utilities.
 
 ## Highlights
 
-- **No plugins** — works on a fresh Neovim install with zero setup.
+- **No third-party package manager** — the lone plugin (tokyonight) is
+  installed via Neovim's built-in `vim.pack`; update it with `:Pack update`.
 - **Leader = `<Space>`**, with mnemonic mappings for save/quit, window
   navigation (`<M-h/j/k/l>`), buffers, and config reload.
 - **Per-filetype indentation** — 2 spaces for web/scripting/markup languages,
@@ -36,4 +39,5 @@ small utilities.
 git clone https://github.com/AzarAI-TOP/nvim-config-mini ~/.config/nvim
 ```
 
-Then launch `nvim`. Requires Neovim 0.9+.
+Then launch `nvim`. On first start, `vim.pack` clones the tokyonight
+colorscheme (needs network access once). Requires Neovim 0.12+.

@@ -2,5 +2,6 @@
 -- 最小化 Neovim 配置
 
 require("option")
+require("colorscheme")
 require("keymap")
 require("autocmd")
