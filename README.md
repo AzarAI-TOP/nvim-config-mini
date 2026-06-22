@@ -2,9 +2,9 @@
 
 A minimal, pure-Lua Neovim configuration — no third-party package manager, no
 external dependencies. Just sane defaults, keymaps, autocommands, and a couple of
-small utilities. The only two plugins — the **tokyonight** colorscheme and
-**nvim-treesitter** — are managed by Neovim's built-in `vim.pack` (requires
-Neovim 0.12+).
+small utilities. The three plugins — the **tokyonight** colorscheme,
+**nvim-treesitter**, and **conform.nvim** (formatting) — are managed by Neovim's
+built-in `vim.pack` (requires Neovim 0.12+).
 
 ## Layout
 
@@ -15,6 +15,7 @@ Neovim 0.12+).
 │   ├── option.lua      # editor options (number, indent, search, undo, ...)
 │   ├── colorscheme.lua # tokyonight (moon) via built-in vim.pack
 │   ├── treesitter.lua  # nvim-treesitter — parser install + auto-enabled highlighting
+│   ├── format.lua      # conform.nvim — code formatting (manual <leader>f)
 │   ├── keymap.lua      # key mappings (leader = <Space>)
 │   ├── autocmd.lua     # autocommands + per-filetype indent rules
 │   └── utils.lua       # helpers (e.g. toggle_comment)
@@ -23,9 +24,14 @@ Neovim 0.12+).
 
 ## Highlights
 
-- **No third-party package manager** — both plugins (tokyonight,
-  nvim-treesitter) are installed via Neovim's built-in `vim.pack`; update them
-  with `:Pack update`.
+- **No third-party package manager** — all plugins (tokyonight,
+  nvim-treesitter, conform.nvim) are installed via Neovim's built-in `vim.pack`;
+  update them with `:Pack update`.
+- **Formatting** — `conform.nvim` formats the current buffer on demand with
+  `<leader>f` (no format-on-save). conform does **not** install the formatter
+  binaries — they must be on your `PATH` (e.g. `stylua`, `prettierd`, `black`,
+  `isort`, `clang-format`, `rustfmt`, `goimports`, `taplo`, `shfmt`); any
+  filetype whose formatter is missing is silently skipped.
 - **Tree-sitter syntax highlighting** — `nvim-treesitter` (main branch) installs
   parsers for the languages in use and auto-enables highlighting on any filetype
   whose parser is present, falling back to the legacy regex syntax otherwise.

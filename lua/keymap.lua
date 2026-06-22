@@ -33,6 +33,11 @@ vim.keymap.set("n", "]b", ":bnext<CR>", { desc = "下一个缓冲区" })
 vim.keymap.set("n", "[b", ":bprevious<CR>", { desc = "上一个缓冲区" })
 vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "删除当前缓冲区" })
 
+-- 格式化
+vim.keymap.set("n", "<leader>f", function()
+    require("conform").format({ lsp_format = "fallback", timeout_ms = 1000 })
+end, { desc = "格式化当前文件" })
+
 -- 配置重载
 vim.keymap.set("n", "<leader>sv", ":source $MYVIMRC<CR>", { desc = "重载配置" })
 vim.keymap.set("n", "<leader>ev", ":vsplit $MYVIMRC<CR>", { desc = "编辑配置" })

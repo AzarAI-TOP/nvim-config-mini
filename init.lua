@@ -4,5 +4,6 @@
 require("option")
 require("colorscheme")
 require("treesitter")
+require("format")
 require("keymap")
 require("autocmd")
