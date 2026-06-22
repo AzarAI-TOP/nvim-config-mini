@@ -1,4 +1,4 @@
--- ~/.config/nvim/lua/utils.lua
+-- ~/.config/nvim/lua/config/utils.lua
 -- 通用工具函数
 
 local M = {}

@@ -1,4 +1,4 @@
--- ~/.config/nvim/lua/autocmd.lua
+-- ~/.config/nvim/lua/config/autocmds.lua
 -- Neovim 自动命令
 
 -- 复制时高亮

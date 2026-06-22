@@ -1,4 +1,4 @@
--- ~/.config/nvim/lua/option.lua
+-- ~/.config/nvim/lua/config/options.lua
 -- Neovim 基础选项
 
 vim.g.mapleader = " "

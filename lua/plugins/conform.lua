@@ -1,4 +1,4 @@
--- ~/.config/nvim/lua/format.lua
+-- ~/.config/nvim/lua/plugins/conform.lua
 -- 代码格式化 (conform.nvim，通过内置 vim.pack 管理)
 -- 说明: conform 本身不安装格式化器，需自行将对应二进制放入 PATH。
 --       某文件类型缺少格式化器时会被静默跳过。

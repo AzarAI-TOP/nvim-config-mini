@@ -10,17 +10,25 @@ built-in `vim.pack` (requires Neovim 0.12+).
 
 ```
 .
-├── init.lua            # entry point — loads the modules below
+├── init.lua                # entry point — loads config modules, then plugins
 ├── lua/
-│   ├── option.lua      # editor options (number, indent, search, undo, ...)
-│   ├── colorscheme.lua # tokyonight (moon) via built-in vim.pack
-│   ├── treesitter.lua  # nvim-treesitter — parser install + auto-enabled highlighting
-│   ├── format.lua      # conform.nvim — code formatting (manual <leader>f)
-│   ├── keymap.lua      # key mappings (leader = <Space>)
-│   ├── autocmd.lua     # autocommands + per-filetype indent rules
-│   └── utils.lua       # helpers (e.g. toggle_comment)
-└── .stylua.toml        # StyLua formatter config
+│   ├── config/
+│   │   ├── options.lua      # editor options (number, indent, search, undo, ...)
+│   │   ├── keymaps.lua      # key mappings (leader = <Space>)
+│   │   ├── autocmds.lua     # autocommands + per-filetype indent rules
+│   │   └── utils.lua        # helpers (e.g. toggle_comment)
+│   └── plugins/
+│       ├── init.lua         # auto-loader — requires every other file in this dir
+│       ├── tokyonight.lua   # tokyonight (moon) colorscheme via built-in vim.pack
+│       ├── treesitter.lua   # nvim-treesitter — parser install + auto-enabled highlighting
+│       └── conform.lua      # conform.nvim — code formatting (manual <leader>f)
+└── .stylua.toml            # StyLua formatter config
 ```
+
+Each file under `lua/plugins/` is self-contained — it carries its own
+`vim.pack.add` alongside its setup — and `lua/plugins/init.lua` loads them all
+automatically, so adding or removing a plugin is just adding or removing one
+file.
 
 ## Highlights
 
@@ -35,8 +43,12 @@ built-in `vim.pack` (requires Neovim 0.12+).
 - **Tree-sitter syntax highlighting** — `nvim-treesitter` (main branch) installs
   parsers for the languages in use and auto-enables highlighting on any filetype
   whose parser is present, falling back to the legacy regex syntax otherwise.
-- **Leader = `<Space>`**, with mnemonic mappings for save/quit, window
-  navigation (`<M-h/j/k/l>`), buffers, and config reload.
+- **Leader = `<Space>`**, with mappings grouped by mnemonic prefix:
+  `<leader>b` buffer, `<leader>c` config (edit/reload), `<leader>l` language
+  (format, room for LSP), `<leader>f` find/file, `<leader>w` window (forwards to
+  `<C-w>`), `<leader>t` toggle. High-frequency file ops stay top-level —
+  `<C-s>` save, `<leader>q` quit, `<leader>Q` quit-all. Direct window
+  navigation via `<M-h/j/k/l>` and resize via `<C-arrows>` remain too.
 - **Per-filetype indentation** — 2 spaces for web/scripting/markup languages,
   4 spaces for systems languages, tabs for Go/Make.
 - **Quality-of-life autocmds** — highlight on yank, restore last cursor

@@ -1,4 +1,4 @@
--- ~/.config/nvim/lua/treesitter.lua
+-- ~/.config/nvim/lua/plugins/treesitter.lua
 -- Tree-sitter 语法高亮 (通过内置 vim.pack 管理 nvim-treesitter)
 -- 说明: Neovim 自带的 7 个解析器无法覆盖 JavaScript 等语言，
 --       未安装解析器时会回退到粗糙的正则语法 (只高亮少量元素)。
