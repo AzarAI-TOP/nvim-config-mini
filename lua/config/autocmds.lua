@@ -1,11 +1,21 @@
 -- ~/.config/nvim/lua/config/autocmds.lua
 -- Autocommands
 
--- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-	group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
-	callback = function() vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 }) end,
-})
+-- Highlight on yank/paste
+-- Uses vim.hl.hl_op (Neovim ≥ 0.13) with fallback to vim.hl.on_yank (0.12.x)
+if vim.hl.hl_op then
+	vim.api.nvim_create_autocmd({ "TextYankPost", "TextPutPost" }, {
+		group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+		callback = function()
+			vim.hl.hl_op({ higroup = "IncSearch", timeout = 150 })
+		end,
+	})
+else
+	vim.api.nvim_create_autocmd("TextYankPost", {
+		group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
+		callback = function() vim.hl.on_yank({ higroup = "IncSearch", timeout = 150 }) end,
+	})
+end
 
 -- Restore last cursor position on file open
 vim.api.nvim_create_autocmd("BufReadPost", {

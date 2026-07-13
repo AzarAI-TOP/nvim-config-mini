@@ -29,7 +29,7 @@ vim.opt.wrap = false
 vim.opt.mouse = "a"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.local/share/nvim/undo"
+vim.opt.undodir = vim.fn.stdpath("data") .. "/undo"
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
@@ -39,8 +39,6 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 vim.opt.showmode = false
-vim.opt.showcmd = true
-vim.opt.ruler = true
 vim.opt.title = true
 
 -- Performance
@@ -49,7 +47,6 @@ vim.opt.updatetime = 100
 vim.opt.redrawtime = 1500
 
 -- Completion
-vim.opt.wildmenu = true
 vim.opt.wildmode = "list:longest,full"
 vim.opt.wildignore = { "*.o", "*.pyc", "*.class", "node_modules/*" }
 
@@ -61,6 +58,3 @@ vim.opt.undolevels = 1000
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Encoding
-vim.opt.encoding = "utf-8"
-vim.opt.fileencoding = "utf-8"

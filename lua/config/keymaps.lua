@@ -44,6 +44,15 @@ map("n", "<leader>lf", function()
     require("conform").format({ lsp_format = "fallback", timeout_ms = 1000 })
     vim.notify("Conform.nvim: the code has been formatted.", "INFO")
 end, "Format file")
+-- LSP
+map("n", "<leader>ld", vim.lsp.buf.definition, "Go to definition")
+map("n", "<leader>lh", vim.lsp.buf.hover, "Hover documentation")
+map("n", "<leader>lr", vim.lsp.buf.references, "Find references")
+map("n", "<leader>lR", vim.lsp.buf.rename, "Rename symbol")
+map("n", "<leader>la", vim.lsp.buf.code_action, "Code action")
+map("n", "<leader>le", vim.diagnostic.open_float, "Diagnostic details")
+map("n", "<leader>li", vim.lsp.buf.implementation, "Go to implementation")
+map("n", "<leader>ls", vim.lsp.buf.signature_help, "Signature help")
 
 -- =============================================
 -- <leader>e — explorer
