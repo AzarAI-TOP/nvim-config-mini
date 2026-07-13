@@ -1,0 +1,23 @@
+#!/bin/sh
+# Pre-commit hook: format staged Lua files with StyLua
+# Configures itself via `git config core.hooksPath .githooks`
+
+set -e
+
+# Only run on Lua files
+staged=$(git diff --cached --name-only --diff-filter=ACMR | grep '\.lua$' || true)
+if [ -z "$staged" ]; then
+    exit 0
+fi
+
+# Check that stylua is available
+if ! command -v stylua >/dev/null 2>&1; then
+    echo "⚠️  stylua not found — skipping Lua formatting"
+    exit 0
+fi
+
+# Format staged Lua files in-place
+echo "$staged" | tr '\n' '\0' | xargs -0 stylua
+
+# Re-stage any files that changed
+echo "$staged" | tr '\n' '\0' | xargs -0 git add

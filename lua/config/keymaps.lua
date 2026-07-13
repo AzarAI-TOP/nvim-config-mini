@@ -46,13 +46,13 @@ map("n", "<leader>lf", function()
 end, "Format file")
 -- LSP
 map("n", "<leader>ld", vim.lsp.buf.definition, "Go to definition")
-map("n", "<leader>lh", vim.lsp.buf.hover, "Hover documentation")
+map("n", "<leader>lh", function() vim.lsp.buf.hover({ border = "rounded" }) end, "Hover documentation")
 map("n", "<leader>lr", vim.lsp.buf.references, "Find references")
 map("n", "<leader>lR", vim.lsp.buf.rename, "Rename symbol")
 map("n", "<leader>la", vim.lsp.buf.code_action, "Code action")
 map("n", "<leader>le", vim.diagnostic.open_float, "Diagnostic details")
 map("n", "<leader>li", vim.lsp.buf.implementation, "Go to implementation")
-map("n", "<leader>ls", vim.lsp.buf.signature_help, "Signature help")
+map("n", "<leader>ls", function() vim.lsp.buf.signature_help({ border = "rounded" }) end, "Signature help")
 
 -- =============================================
 -- <leader>e — explorer

@@ -13,24 +13,24 @@ external dependencies. All plugins are managed by Neovim's built-in `vim.pack`
 │   ├── config/
 │   │   ├── options.lua      # editor options (number, indent, search, undo, ...)
 │   │   ├── keymaps.lua      # key mappings (leader = <Space>)
-│   │   └── autocmds.lua     # autocommands + per-filetype indent rules
+│   │   ├── autocmds.lua     # autocommands + per-filetype indent rules
+│   │   └── lsp.lua          # LSP config (native vim.lsp.config API)
 │   └── plugins/
 │       ├── init.lua         # auto-loader — requires every other file in this dir
 │       ├── bento.lua        # bento.nvim — buffer manager
 │       ├── conform.lua      # conform.nvim — code formatting
 │       ├── fzf.lua          # fzf-lua — fuzzy finding
-│       ├── mini-ai.lua      # mini.ai — textobjects (a/i)
+│       ├── lsp.lua          # mason + mason-lspconfig plugin declarations
 │       ├── mini-bracketed.lua  # mini.bracketed — bracket navigation
-│       ├── mini-comment.lua # mini.comment — comment toggling
+│       ├── mini-core.lua    # mini.ai / .comment / .icons / .indentscope / .move / .trailspace
 │       ├── mini-files.lua   # mini.files — file explorer
-│       ├── mini-icons.lua   # mini.icons — icon provider
-│       ├── mini-indentscope.lua  # mini.indentscope — indent guides
-│       ├── mini-move.lua    # mini.move — move lines/selections
 │       ├── mini-notify.lua  # mini.notify — notification system
-│       ├── mini-trailspace.lua  # mini.trailspace — trailing whitespace
 │       ├── todo-comments.lua    # todo-comments.nvim — TODO highlighting
 │       ├── tokyonight.lua   # tokyonight (moon) colorscheme
 │       └── treesitter.lua   # nvim-treesitter — syntax highlighting
+├── .githooks/
+│   ├── pre-commit           # auto-format staged Lua files via StyLua
+│   └── README.md
 └── .stylua.toml            # StyLua formatter config
 ```
 
@@ -103,3 +103,16 @@ Then launch `nvim`. On first start, `vim.pack` clones all plugins (needs
 network access once), and nvim-treesitter compiles its parsers in the
 background — this needs a C compiler (`cc`/`gcc`/`clang`) on your `PATH`.
 Requires Neovim 0.12+.
+
+## Future Considerations
+
+These upstream changes may affect this config in the near future:
+
+- **bento.nvim v2** — A `feat/v2` branch with a fully refactored API
+  (explicit action/key registration via `require("bento.api")`) is planned for
+  merge to `main` around **July 2026**. The current `setup({ main_keymap = ";" })`
+  config will need updating when that lands.
+- **nvim-treesitter archived** — The repository was archived on 2026-04-03 and
+  is no longer actively developed. The current `main`-branch API works correctly
+  for now. Long-term, Neovim 0.12+'s built-in `vim.treesitter` may be a
+  sufficient replacement for syntax highlighting.
