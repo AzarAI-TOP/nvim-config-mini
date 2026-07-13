@@ -1,10 +1,18 @@
 -- ~/.config/nvim/init.lua
--- 最小化 Neovim 配置
+-- Minimal Neovim configuration
 
--- 核心编辑器配置
+-- Core editor modules
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 
--- 插件 (自动加载 lua/plugins/ 下的所有插件文件)
+-- Plugins (auto-loaded from lua/plugins/)
 require("plugins")
+
+-- Ensure RPC socket is at a writable path, avoiding SELinux permission errors
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    pcall(vim.fn.serverstart, vim.fn.stdpath("data") .. "/nvim.sock")
+  end,
+})

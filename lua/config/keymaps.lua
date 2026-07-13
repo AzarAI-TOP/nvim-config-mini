@@ -1,96 +1,114 @@
 -- ~/.config/nvim/lua/config/keymaps.lua
--- Neovim 键位映射
+-- Key mappings
 --
--- 按 <leader> 前缀分类:
---   <leader>b  缓冲区 (buffer)
---   <leader>c  配置   (config)
---   <leader>l  语言   (language: lsp / 格式化)
---   <leader>f  查找   (find / file)
---   <leader>w  窗口   (window，转发到 <C-w>)
---   <leader>t  开关   (toggle)
--- 高频的文件/会话操作保留为顶层无前缀键 (<C-s> 保存等)。
+-- Leader prefix groups:
+--   <leader>b  buffer
+--   <leader>c  config
+--   <leader>l  language (format / LSP)
+--   <leader>f  find / file
+--   <leader>w  window (forwards to <C-w>)
+--   <leader>t  toggle
+-- High-frequency file/session ops stay top-level (<C-s> save, etc.).
 
-local utils = require("config.utils")
-
--- 小工具: 简化 vim.keymap.set 调用
 local function map(mode, lhs, rhs, desc, opts)
     opts = vim.tbl_extend("force", { desc = desc }, opts or {})
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 
 -- =============================================
--- 顶层: 文件 / 会话 (高频，无前缀)
+-- Top-level: file / session (no prefix)
 -- =============================================
-map({ "n", "i" }, "<C-s>", "<Esc>:write<CR>", "保存文件")
-map("n", "<leader>q", ":quit<CR>", "退出")
-map("n", "<leader>Q", ":qa<CR>", "退出全部")
-map("n", "<leader>W", ":write !sudo tee % > /dev/null<CR>", "提权保存")
-map("n", "<leader>nh", ":nohlsearch<CR>", "清除搜索高亮")
+map({ "n", "i" }, "<C-s>", "<Esc>:write<CR>", "Save file")
+map("n", "<leader>q", ":quit<CR>", "Quit")
+map("n", "<leader>Q", ":qa<CR>", "Quit all")
+map("n", "<leader>W", ":write !sudo tee % > /dev/null<CR>", "Sudo save")
+map("n", "<leader>nh", ":nohlsearch<CR>", "Clear search highlight")
 
 -- =============================================
--- <leader>b — 缓冲区 (buffer)
+-- <leader>b — buffer
 -- =============================================
-map("n", "<leader>bd", ":bdelete<CR>", "删除当前缓冲区")
-map("n", "<leader>bn", ":bnext<CR>", "下一个缓冲区")
-map("n", "<leader>bp", ":bprevious<CR>", "上一个缓冲区")
+map("n", "<leader>bd", ":bdelete<CR>", "Delete buffer")
+map("n", "<leader>bn", ":bnext<CR>", "Next buffer")
+map("n", "<leader>bp", ":bprevious<CR>", "Previous buffer")
 
 -- =============================================
--- <leader>c — 配置 (config)
+-- <leader>c — config
 -- =============================================
-map("n", "<leader>ce", ":vsplit $MYVIMRC<CR>", "编辑配置")
-map("n", "<leader>cr", ":source $MYVIMRC<CR>", "重载配置")
+map("n", "<leader>ce", ":vsplit $MYVIMRC<CR>", "Edit config")
+map("n", "<leader>cr", ":source $MYVIMRC<CR>", "Reload config")
 
 -- =============================================
--- <leader>l — 语言 (language: lsp / 格式化)
+-- <leader>l — language (format / LSP)
 -- =============================================
 map("n", "<leader>lf", function()
     require("conform").format({ lsp_format = "fallback", timeout_ms = 1000 })
-end, "格式化当前文件")
+    vim.notify("Conform.nvim: the code has been formatted.", "INFO")
+end, "Format file")
 
 -- =============================================
--- <leader>f — 查找 / 文件 (find / file)
+-- <leader>e — explorer
 -- =============================================
-map("n", "<leader>fe", ":Ex<CR>", "文件浏览器")
+map("n", "<leader>e", ":lua MiniFiles.open()<CR>", "File explorer")
 
 -- =============================================
--- <leader>w — 窗口 (window，转发到 <C-w> 子菜单)
+-- <leader>f — find / search
 -- =============================================
--- <leader>w 后接原生 <C-w> 操作: ws 分屏 / wv 竖分 / wc 关闭 / wo 仅留当前 /
--- wh wj wk wl 切换 / w= 平衡 等。
-map("n", "<leader>w", "<C-w>", "窗口", { remap = true })
-
--- 直达键 (与上面的子菜单互补)
-map("n", "<M-h>", "<C-w>h", "左窗口")
-map("n", "<M-j>", "<C-w>j", "下窗口")
-map("n", "<M-k>", "<C-w>k", "上窗口")
-map("n", "<M-l>", "<C-w>l", "右窗口")
-map("n", "<C-Up>", ":resize -2<CR>", "缩小高度")
-map("n", "<C-Down>", ":resize +2<CR>", "增大高度")
-map("n", "<C-Left>", ":vertical resize -2<CR>", "缩小宽度")
-map("n", "<C-Right>", ":vertical resize +2<CR>", "增大宽度")
+-- ff   Find files
+-- fc   Find in config
+-- fr   Search registers
+-- fh   Search help
+-- ft   Find todos
 
 -- =============================================
--- <leader>t — 开关 (toggle)
+-- <leader>w — window (forwards to <C-w>)
 -- =============================================
-map("n", "<leader>tp", ":set paste!<CR>", "切换粘贴模式")
-map("n", "<leader>tw", ":set wrap!<CR>", "切换自动换行")
+-- <leader>w + <C-w> sub-commands: ws split / wv vsplit / wc close / wo only /
+-- wh wj wk wl navigate / w= equal-size, etc.
+map("n", "<leader>w", "<C-w>", "Window", { remap = true })
+
+-- Direct window navigation
+map("n", "<M-h>", "<C-w>h", "Window left")
+map("n", "<M-j>", "<C-w>j", "Window down")
+map("n", "<M-k>", "<C-w>k", "Window up")
+map("n", "<M-l>", "<C-w>l", "Window right")
+map("n", "<C-Up>", ":resize -2<CR>", "Decrease height")
+map("n", "<C-Down>", ":resize +2<CR>", "Increase height")
+map("n", "<C-Left>", ":vertical resize -2<CR>", "Decrease width")
+map("n", "<C-Right>", ":vertical resize +2<CR>", "Increase width")
 
 -- =============================================
--- 其它 (无前缀直达键)
+-- <leader>t — toggle
 -- =============================================
--- 缓冲区快速切换
-map("n", "]b", ":bnext<CR>", "下一个缓冲区")
-map("n", "[b", ":bprevious<CR>", "上一个缓冲区")
+map("n", "<leader>tp", ":set paste!<CR>", "Toggle paste mode")
+map("n", "<leader>tw", ":set wrap!<CR>", "Toggle wrap")
 
--- 搜索
-map("n", "*", "*<C-o>", "搜索当前词不跳转")
-map("n", "<Esc><Esc>", ":nohlsearch<CR>", "双击 Esc 取消高亮")
+-- =============================================
+-- Other (direct keys)
+-- =============================================
+-- Search
+map("n", "*", "*<C-o>", "Search word (no jump)")
+map("n", "<Esc><Esc>", ":nohlsearch<CR>", "Clear highlight (double Esc)")
 
--- 页面滚动居中
-map("n", "<C-d>", "<C-d>zz", "向下半页居中")
-map("n", "<C-u>", "<C-u>zz", "向上半页居中")
-map("n", "n", "nzzzv", "下一个结果居中")
-map("n", "N", "Nzzzv", "上一个结果居中")
+-- Scroll and center
+map("n", "<C-d>", "<C-d>zz", "Page down half, center")
+map("n", "<C-u>", "<C-u>zz", "Page up half, center")
+map("n", "n", "nzzzv", "Next result, center")
+map("n", "N", "Nzzzv", "Previous result, center")
 
--- 注释切换
-map({ "n", "v" }, "<C-/>", utils.toggle_comment, "切换注释")
+-- Comment (via mini.comment)
+map("n", "<C-/>", "gcc", "Toggle comment", { remap = true })
+map("v", "<C-/>", "gc", "Toggle comment", { remap = true })
+
+-- =============================================
+-- Plugin mappings
+-- =============================================
+-- FZF-LUA
+map("n", "<Leader>ff", ":lua FzfLua.files()<CR>", "Find files")
+map("n", "<Leader>fc", ":lua FzfLua.files({ cwd= '~/.config/nvim'})<CR>", "Find in config")
+map("n", "<Leader>fr", ":lua FzfLua.registers()<CR>", "Search registers")
+map("n", "<Leader>fh", ":lua FzfLua.helptags()<CR>", "Search help")
+
+-- Todo comments
+map("n", "<Leader>ft", ":TodoFzfLua<CR>", "Find todos")
+map("n", "]t", function() require("todo-comments").jump_next() end, "Next todo")
+map("n", "[t", function() require("todo-comments").jump_prev() end, "Previous todo")

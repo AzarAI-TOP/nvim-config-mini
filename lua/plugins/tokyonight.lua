@@ -1,5 +1,5 @@
 -- ~/.config/nvim/lua/plugins/tokyonight.lua
--- 颜色主题 (tokyonight，通过内置 vim.pack 管理)
+-- Colorscheme (tokyonight, via vim.pack)
 
 vim.pack.add({
   { src = "https://github.com/folke/tokyonight.nvim" },

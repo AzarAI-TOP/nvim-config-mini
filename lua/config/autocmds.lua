@@ -1,13 +1,13 @@
 -- ~/.config/nvim/lua/config/autocmds.lua
--- Neovim 自动命令
+-- Autocommands
 
--- 复制时高亮
+-- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
 	callback = function() vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 }) end,
 })
 
--- 打开文件回到上次编辑位置
+-- Restore last cursor position on file open
 vim.api.nvim_create_autocmd("BufReadPost", {
 	group = vim.api.nvim_create_augroup("last_position", { clear = true }),
 	callback = function()
@@ -18,17 +18,17 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- =============================================
--- 文件类型缩进配置
+-- Per-filetype indentation
 -- =============================================
--- 全局默认值定义在 option.lua: 4 空格缩进, expandtab
--- 此处仅覆盖与全局默认不同的文件类型
--- 未在此列出的文件类型将使用全局默认 (4 空格, expandtab)
+-- Global defaults in options.lua: 4-space indent, expandtab.
+-- Only non-default filetypes are overridden here.
+-- Unlisted filetypes inherit the global default.
 
 local indent_augroup = vim.api.nvim_create_augroup("indent_settings", { clear = true })
 
--- 缩进配置组: [tabstop, shiftwidth, expandtab, filetypes列表]
+-- Indent config groups: [tabstop, shiftwidth, expandtab, filetypes]
 local indent_groups = {
-	-- 2 空格缩进 — 前端 / 脚本 / 标记语言 / 声明式语言
+	-- 2 spaces — web / scripting / markup / declarative languages
 	{ 2, 2, true, {
 		"lua", "vim",
 		"javascript", "javascriptreact", "typescript", "typescriptreact",
@@ -53,7 +53,7 @@ local indent_groups = {
 		"gleam",
 	} },
 
-	-- 4 空格缩进 — 系统编程 / 传统语言
+	-- 4 spaces — systems / traditional languages
 	{ 4, 4, true, {
 		"python",
 		"rust",
@@ -70,7 +70,7 @@ local indent_groups = {
 		"pascal",
 	} },
 
-	-- Tab 缩进 — 工具链强制使用 Tab 的语言
+	-- Tab indent — toolchains that mandate tabs
 	{ 4, 4, false, {
 		"go",
 		"make",
