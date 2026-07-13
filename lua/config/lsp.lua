@@ -1,12 +1,9 @@
 -- ~/.config/nvim/lua/config/lsp.lua
 -- LSP configuration: mason-lspconfig + per-server settings
 
--- Servers already on PATH (enable directly)
-vim.lsp.enable("gopls")
-vim.lsp.enable("clangd")
-
--- Servers mason should install
 local to_install = {
+  "gopls",
+  "clangd",
   "rust_analyzer",
   "ts_ls",
   "html",
