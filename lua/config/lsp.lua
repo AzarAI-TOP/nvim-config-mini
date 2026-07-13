@@ -7,16 +7,16 @@ vim.lsp.enable("clangd")
 
 -- Servers mason should install
 local to_install = {
-  "rust-analyzer",
-  "typescript-language-server",
-  "html-lsp",
-  "css-lsp",
-  "json-lsp",
+  "rust_analyzer",
+  "ts_ls",
+  "html",
+  "cssls",
+  "jsonls",
   "pyright",
-  "lua-language-server",
-  "bash-language-server",
-  "yaml-language-server",
-  "kotlin-lsp",
+  "lua_ls",
+  "bashls",
+  "yamlls",
+  "kotlin_lsp",
 }
 
 -- Mason-lspconfig: installs missing servers + enables installed ones

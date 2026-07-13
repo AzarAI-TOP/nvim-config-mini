@@ -5,4 +5,10 @@ vim.pack.add({
   { src = "https://github.com/nvim-mini/mini.notify" },
 })
 
-require("mini.notify").setup()
+require("mini.notify").setup({
+  window = {
+    config = {
+      focusable = true,
+    },
+  },
+})

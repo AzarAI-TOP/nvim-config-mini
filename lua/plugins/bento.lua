@@ -13,7 +13,6 @@ require("bento").setup({
     floating = {
       position = "middle-right",
       border = "rounded",
-      minimal_menu = "dashed",
     },
   },
 })
