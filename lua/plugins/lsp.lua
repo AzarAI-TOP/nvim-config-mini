@@ -10,5 +10,3 @@ vim.pack.add({
 })
 
 require("mason").setup()
-
-require("config.lsp")
