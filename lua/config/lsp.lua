@@ -44,8 +44,8 @@ require("mason-lspconfig").setup({
 -- Auto-load per-server configs from lua/lsp/<server>.lua
 -- Each file must return a config table (or empty for defaults).
 local lsp_dir = vim.fn.stdpath("config") .. "/lua/lsp"
-for name, type in vim.fs.dir(lsp_dir) do
-    if type == "file" and name:match("%.lua$") then
+for name, ftype in vim.fs.dir(lsp_dir) do
+    if ftype == "file" and name:match("%.lua$") then
         local server_name = name:gsub("%.lua$", "")
         local ok, config = pcall(require, "lsp." .. server_name)
         if ok and type(config) == "table" then vim.lsp.config[server_name] = config end
