@@ -104,7 +104,7 @@ by `lua/config/lsp.lua`.
 ## Install
 
 ```sh
-git clone https://github.com/AzarAI-TOP/nvim-config-mini ~/.config/nvim
+git clone https://github.com/AzarAI-TOP/nvim-config ~/.config/nvim
 ```
 
 Then launch `nvim`. On first start, `vim.pack` clones all plugins (needs
