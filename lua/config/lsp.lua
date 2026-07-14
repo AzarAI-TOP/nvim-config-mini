@@ -1,7 +1,7 @@
 -- ~/.config/nvim/lua/config/lsp.lua
 -- LSP configuration (pure Neovim 0.11+ native API)
 --
--- Uses vim.lsp.config + vim.lsp.enable instead of nvim-lspconfig.
+-- Auto-loads per-server configs from lua/lsp/<server>.lua.
 -- Mason handles installing LSP servers; mason-lspconfig provides
 -- ensure_installed convenience.
 
@@ -41,44 +41,19 @@ require("mason-lspconfig").setup({
     ensure_installed = servers,
 })
 
--- Per-server native config (only non-default ones)
-local function get_config(server)
-    if server == "lua_ls" then
-        return {
-            settings = {
-                Lua = {
-                    runtime = { version = "LuaJIT" },
-                    diagnostics = { globals = { "vim" } },
-                    workspace = {
-                        library = {
-                            vim.fn.stdpath("data") .. "/site",
-                            vim.env.VIMRUNTIME .. "/lua",
-                        },
-                        checkThirdParty = false,
-                    },
-                    telemetry = { enable = false },
-                },
-            },
-        }
+-- Auto-load per-server configs from lua/lsp/<server>.lua
+-- Each file must return a config table (or empty for defaults).
+local lsp_dir = vim.fn.stdpath("config") .. "/lua/lsp"
+for name, type in vim.fs.dir(lsp_dir) do
+    if type == "file" and name:match("%.lua$") then
+        local server_name = name:gsub("%.lua$", "")
+        local ok, config = pcall(require, "lsp." .. server_name)
+        if ok and type(config) == "table" then vim.lsp.config[server_name] = config end
     end
-    if server == "pyright" then
-        return {
-            settings = {
-                python = {
-                    analysis = {
-                        autoSearchPaths = true,
-                        useLibraryCodeForTypes = true,
-                        diagnosticMode = "workspace",
-                    },
-                },
-            },
-        }
-    end
-    return {}
 end
 
--- Register config + enable each server natively
+-- Register default (empty) config + enable each server
 for _, server in ipairs(servers) do
-    vim.lsp.config[server] = get_config(server)
+    if not vim.lsp.config[server] then vim.lsp.config[server] = {} end
     vim.lsp.enable(server)
 end

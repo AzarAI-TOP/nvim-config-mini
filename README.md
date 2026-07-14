@@ -15,12 +15,18 @@ external dependencies. All plugins are managed by Neovim's built-in `vim.pack`
 │   │   ├── keymaps.lua      # key mappings (leader = <Space>)
 │   │   ├── autocmds.lua     # autocommands + per-filetype indent rules
 │   │   └── lsp.lua          # LSP config (native vim.lsp.config API)
+│   ├── lsp/
+│   │   ├── gopls.lua        # Go Language Server config
+│   │   ├── lua_ls.lua       # Lua Language Server config
+│   │   ├── pyright.lua      # Pyright config
+│   │   ├── rust_analyzer.lua # rust-analyzer config
+│   │   └── yamlls.lua       # YAML Language Server config
 │   └── plugins/
 │       ├── init.lua         # auto-loader — requires every other file in this dir
 │       ├── bento.lua        # bento.nvim — buffer manager
 │       ├── conform.lua      # conform.nvim — code formatting
 │       ├── fzf.lua          # fzf-lua — fuzzy finding
-│       ├── lsp.lua          # mason + mason-lspconfig plugin declarations
+│       ├── mason.lua        # mason + mason-lspconfig plugin declarations
 │       ├── mini-bracketed.lua  # mini.bracketed — bracket navigation
 │       ├── mini-core.lua    # mini.ai / .comment / .icons / .indentscope / .move / .trailspace
 │       ├── mini-files.lua   # mini.files — file explorer
@@ -37,6 +43,8 @@ external dependencies. All plugins are managed by Neovim's built-in `vim.pack`
 Each file under `lua/plugins/` is self-contained — it carries its own
 `vim.pack.add` alongside its setup — and `lua/plugins/init.lua` loads them all
 automatically. Adding or removing a plugin is just adding or removing one file.
+Per-server LSP configs live in `lua/lsp/<server>.lua` and are auto-loaded
+by `lua/config/lsp.lua`.
 
 ## Highlights
 
