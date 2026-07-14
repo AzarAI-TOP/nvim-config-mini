@@ -5,7 +5,6 @@
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
-require("config.lsp")
 
 -- Plugins (auto-loaded from lua/plugins/)
 require("plugins")
@@ -15,3 +14,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
     once = true,
     callback = function() pcall(vim.fn.serverstart, vim.fn.stdpath("data") .. "/nvim.sock") end,
 })
+
+-- Language server protocol
+require("config.lsp")
