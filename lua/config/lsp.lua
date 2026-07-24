@@ -48,12 +48,11 @@ for name, ftype in vim.fs.dir(lsp_dir) do
     if ftype == "file" and name:match("%.lua$") then
         local server_name = name:gsub("%.lua$", "")
         local ok, config = pcall(require, "lsp." .. server_name)
-        if ok and type(config) == "table" then vim.lsp.config[server_name] = config end
+        if ok and type(config) == "table" then vim.lsp.config(server_name, config) end
     end
 end
 
--- Register default (empty) config + enable each server
+-- Load each server's runtime definition and enable it.
 for _, server in ipairs(servers) do
-    if not vim.lsp.config[server] then vim.lsp.config[server] = {} end
     vim.lsp.enable(server)
 end
